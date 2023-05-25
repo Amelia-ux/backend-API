@@ -7,7 +7,7 @@ const fs = require('fs');
 const app = express();
 
 // Konfigurasi Firebase Admin SDK
-const serviceAccount = require('./path/to/your/serviceAccountKey.json');
+const serviceAccount = require('serviceAccountKey.json');
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://your-firebase-database-url.firebaseio.com'
