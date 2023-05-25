@@ -32,8 +32,8 @@ app.post('/upload', upload.single('audio'), async (req, res) => {
     // Memperbarui dokumen Firestore dengan hasil pemrosesan
     await updateFirestoreDocument(documentRef, result);
 
-    // Mengirimkan respons sukses
-    res.json({ success: true });
+    // Mengirimkan hasil pemrosesan sebagai respons
+    res.json({ result });
   } catch (error) {
     console.error('Error processing audio:', error);
     res.status(500).json({ error: 'Failed to process audio' });
