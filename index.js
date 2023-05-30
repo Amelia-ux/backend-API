@@ -62,16 +62,6 @@ app.get('/proses-rekaman/:id', (req, res) => {
       res.status(500).json({ error: 'Gagal memproses rekaman suara' });
     });
 });
-
-// Fungsi untuk memproses rekaman suara menggunakan model machine learning
-function prosesRekamanSuara(data) {
-  // Logika pemrosesan rekaman suara menggunakan model machine learning
-  // ...
-
-  return 'Hasil pemrosesan';
-}
-
-// Menjalankan server pada port tertentu
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server berjalan pada port ${port}`);
