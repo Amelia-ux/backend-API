@@ -1,0 +1,7 @@
+runtime: nodejs14
+
+handlers:
+  - url: /rekaman-suara
+    script: auto
+env_variables:
+  FIREBASE_PROJECT_ID: your-firebase-project-id
