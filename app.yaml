@@ -8,5 +8,9 @@ automatic_scaling:
   max_instances: 10
 
 env_variables:
+<<<<<<< HEAD
   FIREBASE_PROJECT_ID: your-firebase-project-id
   GOOGLE_APPLICATION_CREDENTIALS: /path/to/your/serviceAccountKey.json
+=======
+  FIREBASE_PROJECT_ID: https://halodek-project-a7a7d-default-rtdb.asia-southeast1.firebasedatabase.app/
+>>>>>>> 9928b01bbd3bc5372ee480e8b96abb7818236bc8

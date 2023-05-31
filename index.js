@@ -6,8 +6,13 @@ const fs = require('fs');
 // Inisialisasi aplikasi Express
 const app = express();
 
+<<<<<<< HEAD
 // Konfigurasi Firebase Admin SDK
 const serviceAccount = require('serviceAccountKey.json');
+=======
+// Inisialisasi Firebase Admin SDK
+const serviceAccount = require('./serviceAccountKey.json');
+>>>>>>> 9928b01bbd3bc5372ee480e8b96abb7818236bc8
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://your-firebase-database-url.firebaseio.com'
