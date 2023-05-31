@@ -1,68 +1,66 @@
 const express = require('express');
+const multer = require('multer');
 const admin = require('firebase-admin');
+const fs = require('fs');
 
+// Inisialisasi aplikasi Express
 const app = express();
-app.use(express.json());
 
-// Inisialisasi Firebase Admin SDK
-const serviceAccount = require('./path/to/serviceAccountKey.json');
+// Konfigurasi Firebase Admin SDK
+const serviceAccount = require('serviceAccountKey.json');
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-const db = admin.firestore();
-
-// Middleware untuk mengizinkan CORS
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://your-firebase-database-url.firebaseio.com'
 });
 
-// Endpoint untuk menyimpan rekaman suara
-app.post('/rekaman-suara', async (req, res) => {
+// Konfigurasi multer untuk mengunggah file suara
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+// Endpoint API untuk mengunggah rekaman suara
+app.post('/upload', upload.single('audio'), async (req, res) => {
   try {
-    const { namaFile, data } = req.body;
+    // Mengambil data suara yang diunggah
+    const audioData = req.file.buffer;
 
-    // Simpan metadata rekaman suara ke Firestore
-    const docRef = await db.collection('rekaman').add({
-      namaFile,
-      data
-    });
+    // Menyimpan data suara ke Firebase Firestore
+    const documentRef = await saveAudioData(audioData);
 
-    res.status(201).json({ id: docRef.id });
+    // Memproses data suara menggunakan model machine learning
+    const result = await processAudioData(audioData);
+
+    // Mengirimkan hasil pemrosesan sebagai respons
+    res.json({ result });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Gagal menyimpan rekaman suara' });
+    console.error('Error processing audio:', error);
+    res.status(500).json({ error: 'Failed to process audio' });
   }
 });
 
-// Endpoint untuk memproses rekaman suara
-app.get('/proses-rekaman/:id', (req, res) => {
-  const { id } = req.params;
+// Fungsi untuk menyimpan data suara ke Firebase Firestore
+async function saveAudioData(audioData) {
+  const db = admin.firestore();
+  const collectionRef = db.collection('audio');
 
-  // Mengambil data rekaman suara dari Firestore berdasarkan ID
-  db.collection('rekaman')
-    .doc(id)
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        const data = doc.data();
+  // Membuat dokumen baru dengan data suara
+  const documentRef = await collectionRef.add({ audio: audioData });
 
-        // Panggil fungsi prosesRekamanSuara dari script.js untuk memproses rekaman suara
-        const hasilProses = prosesRekamanSuara(data);
+  return documentRef;
+}
 
-        res.status(200).json({ hasilProses });
-      } else {
-        res.status(404).json({ error: 'Rekaman suara tidak ditemukan' });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).json({ error: 'Gagal memproses rekaman suara' });
-    });
-});
-const port = 3000;
+// Fungsi untuk memproses data suara menggunakan model machine learning
+async function processAudioData(audioData) {
+  // Memanggil file script.js
+  const script = require('halodek-project/ML/js/script.js');
+
+  // Memanggil fungsi di dalam script.js untuk memproses data suara
+  const result = script.processAudio(audioData);
+
+  return result;
+}
+
+// Menjalankan server pada port tertentu
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server berjalan pada port ${port}`);
+  console.log(`Server berjalan pada http://localhost:${port}`);
 });
