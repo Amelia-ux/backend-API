@@ -59,7 +59,7 @@ async function predict(model, input) {
 //example of code usage
 async function run(){
   //load model
-  const MODEL_URL = 'http://127.0.0.1:8080/model_f/model.json';
+  const MODEL_URL = 'https://storage.googleapis.com/halodek-project/ML/js/model_f/model.json';
   const model = await tf.loadLayersModel(MODEL_URL);
 
   //example of belly-pain audio file
