@@ -1,68 +1,89 @@
-const express = require("express");
-const router = express.Router();
-const db = require("../db");
 const axios = require("axios");
+const fs = require("fs");
+const express = require("express");
+const FormData = require("form-data");
+const router = express.Router();
+const mysql = require("mysql");
 
-const app = express(); // Create an instance of the express application
+// Local directory containing WAV files
+const directoryPath = "./audio_history";
 
-// API endpoint to retrieve prediction result for a given audio file
-app.get("/prediction/:audioName", (req, res) => {
-  const audioName = req.params.audioName;
+// ML model API endpoint
+const mlModelEndpoint = "https://getprediction-7rpnuc6dkq-as.a.run.app";
 
-  // Retrieve prediction result from MySQL
-  getPredictionResult(audioName)
-    .then((prediction) => {
-      if (!prediction) {
-        res.status(404).json({ message: "Prediction not found" });
-      } else {
-        res.status(200).json({ prediction });
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).json({ message: "Internal server error" });
-    });
+// Create a MySQL connection pool
+const pool = mysql.createPool({
+  host: "34.126.92.65",
+  user: "root",
+  password: "capstone23",
+  database: "halodek-users",
 });
 
-// Function to call the ML model API for processing audio data
-async function callMLModel(audioData) {
-  // Make an HTTP request to the ML model API endpoint
-  const mlModelEndpoint = "https://getprediction-7rpnuc6dkq-as.a.run.app";
-  const response = await axios.post(mlModelEndpoint, audioData);
+router.post("/", async (req, res) => {
+  try {
+    // Get the list of files in the directory
+    const files = fs.readdirSync(directoryPath);
 
-  // Extract the prediction result from the response
-  const predictionResult = response.data.prediction;
-  return predictionResult;
-}
+    // Filter for WAV files
+    const wavFiles = files.filter((file) => file.endsWith(".wav"));
 
-// Function to save audio name and prediction result to MySQL
-function savePredictionResult(audioName, predictionResult) {
-  const insertQuery = "INSERT INTO predictions (audio_name, prediction) VALUES (?, ?)";
-  const values = [audioName, predictionResult];
-
-  pool.query(insertQuery, values, (error, result) => {
-    if (error) {
-      console.error(error);
+    if (wavFiles.length === 0) {
+      return res.status(404).json({ message: "No WAV files found" });
     }
+
+    // Find the latest WAV file
+    const latestFile = getLatestFile(wavFiles);
+
+    // Read the audio file
+    const filePath = `${directoryPath}/${latestFile}`;
+    const fileStream = fs.createReadStream(filePath);
+
+    // Create form data and append the file
+    const formData = new FormData();
+    formData.append("file", fileStream);
+
+    // Process the audio file using the ML model
+    const response = await axios.post(mlModelEndpoint, formData, {
+      headers: formData.getHeaders(),
+    });
+    console.log(response.data);
+    // Extract the prediction result from the response
+    const predictionResult = response.data.prediction;
+    console.log(predictionResult);
+
+    // Save the filename and prediction in MySQL
+    savePredictionToMySQL(latestFile, predictionResult);
+
+    // Send the prediction result as the API response
+    res.json({
+      filename: latestFile,
+      prediction: predictionResult,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Function to get the latest file from an array of files
+function getLatestFile(files) {
+  return files.reduce((latest, current) => {
+    const latestTimestamp = fs.statSync(`${directoryPath}/${latest}`).mtimeMs;
+    const currentTimestamp = fs.statSync(`${directoryPath}/${current}`).mtimeMs;
+    return currentTimestamp > latestTimestamp ? current : latest;
   });
 }
 
-// Function to retrieve prediction result for a given audio name from MySQL
-function getPredictionResult(audioName) {
-  return new Promise((resolve, reject) => {
-    const selectQuery = "SELECT prediction FROM predictions WHERE audio_name = ?";
-    const values = [audioName];
-
-    db.query(selectQuery, values, (error, rows) => {
-      if (error) {
-        reject(error);
-      } else if (rows.length === 0) {
-        resolve(null);
-      } else {
-        const prediction = rows[0].prediction;
-        resolve(prediction);
-      }
-    });
+// Function to save the filename and prediction in MySQL
+function savePredictionToMySQL(filename, prediction) {
+  const query = "INSERT INTO audio_files (filename, prediction) VALUES (?, ?)";
+  const values = [filename, JSON.stringify(prediction)];
+  pool.query(query, values, (error, results) => {
+    if (error) {
+      console.error("Error saving prediction to MySQL:", error);
+    } else {
+      console.log("Prediction saved to MySQL");
+    }
   });
 }
 

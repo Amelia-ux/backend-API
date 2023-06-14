@@ -3,9 +3,6 @@ const router = express.Router();
 const { PredictionServiceClient } = require("@google-cloud/automl").v1;
 const axios = require("axios");
 const db = require("../db");
-const fetch = require('node-fetch');
-const tf = require('@tensorflow/tfjs-node');
-const fs = require('fs');
 
 const client = new PredictionServiceClient({
   keyFilename: "./serviceAccountKey.json",
@@ -15,20 +12,11 @@ const bucketName = "halodek-project";
 
 async function loadModel() {
   try {
-    const response = await fetch(modelUrl);
-
-    if (response.ok) {
-      const modelData = await response.json();
-      const modelPath = modelData.model_path;
-      const model = await tf.loadLayersModel(modelPath);
-      return model;
-    } else {
-      console.error('Failed to load model:', response.status, response.statusText);
-      return null;
-    }
+    const modelResponse = await axios.get(`${modelUrl}`);
+    return modelResponse.data;
   } catch (error) {
-    console.error('Error loading model:', error);
-    return null;
+    console.error("Error loading ML model:", error);
+    throw new Error("Failed to load ML model");
   }
 }
 
@@ -94,19 +82,5 @@ router.get("/", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
-// Test API
-const formData = new FormData();
-formData.append('file', fs.createReadStream('./data_babies_cry/tired/1309B82C-F146-46F0-A723-45345AFA6EA8-1430059864-1.0-f-04-ti.wav'));
-
-axios.post('https://getprediction-7rpnuc6dkq-as.a.run.app', formData, {
-  headers: formData.getHeaders()
-})
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
 
 module.exports = router;
