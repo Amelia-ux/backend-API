@@ -10,10 +10,10 @@ router.use(express.urlencoded({ extended: true }));
 
 // Create a MySQL connection pool
 const pool = mysql.createPool({
-  host: "34.126.92.65",
-  user: "root",
-  password: "capstone23",
-  database: "halodek-users",
+  host: YOUR_DB_HOST,
+  user: YOUR_DB_USER,
+  password: YOUR_DB_PASS,
+  database: YOUR_DB_NAME,
 });
 
 router.post("/register", (req, res) => {
