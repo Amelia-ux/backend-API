@@ -35,3 +35,11 @@ docker push gcr.io/<project-id>/<image-name>
 5. Set the authentication method, if required.
 6. Click on "Create" to deploy the container image to Cloud Run.
 
+## Mobile Development
+### Featured Technologies
+* Kotlin : It is a contemporary, succinct, and secure programming language. With its brevity, safety, and interoperability features, Kotlin stands out in the modern development landscape.
+* Retrofit : Retrofit serves as the mechanism that transforms API interfaces into callable objects. It acts as the bridge that allows to seamlessly interact with APIs by encapsulating them within callable entities.
+* MediaRecorder : MediaRecorder is the modern Android framework API for audio recording that supersedes the outdated audio recording libraries.
+### Screenshot
+<img src="MD/images/ss-2.png">
+<img src="MD/images/ss-1.png">
