@@ -1,5 +1,6 @@
-<img src="ML/images/logo.png" height="400" alt="Screenshot"/>
-
+<div align="center">
+    <img src="ML/images/logo.png" height="400" alt="Screenshot"/>
+</div>
 # Halodek by Bangkit 2023 C23-PR534 Product Capstone
 A mobile app for baby cry recognition is a tool designed to help parents or caregivers understand and analyze the crying patterns of infants. This app aims to assist parents in better understanding and responding to their baby's needs, promoting effective communication and care.
 
@@ -8,11 +9,13 @@ we built a TensorFlow model to predict baby's cry based on its characteristics, 
 
 ### Dataset
 We collected a diverse range of baby crying sounds from various sources, including YouTube channels and GitHub repositories:
+
 https://github.com/gveres/donateacry-corpus/tree/master/donateacry_corpus_cleaned_and_updated_data 
 https://github.com/royangkr/BabyReady/tree/master/BabyReady%20-%20Python/data 
 
 ### Architecture of Model
 This architecture combines convolutional neural networks (CNNs) and dense layers for the baseline model with 8 classes (hungry, sleepy, discomfort, scared, belly pain, burp, temperature, or lonely).
+
 <img src="ML/images/model.png" height="400" alt="Screenshot"/>
 
 ### Workflow of Getting a Baby Crying Prediction
@@ -22,7 +25,9 @@ This architecture combines convolutional neural networks (CNNs) and dense layers
 
 ### Model Performance
 The model has been trained on over 340 baby's cry and got 89% accuracy on test data
-| <img src="ML/images/accuracy.png" height="400" alt="Screenshot"/>  | <img src="ML/images/loss.png" height="400" alt="Screenshot"/> |
+
+<img src="ML/images/accuracy.png" height="400" alt="Screenshot"/>
+<img src="ML/images/loss.png" height="400" alt="Screenshot"/>
 
 ## Cloud Computing
 This is the backend repository Halodek Project For CRUD using RESTFul API. See the documentation for use RESTAPI [[Docummentation]](https://docs.google.com/document/d/1eN2xFW4rpklSDkPZWBPh6-LZ688wyZRP2QFsMmWIk1A/edit?usp=sharing)
@@ -65,4 +70,5 @@ Retrofit : Retrofit serves as the mechanism that transforms API interfaces into 
 MediaRecorder : MediaRecorder is the modern Android framework API for audio recording that supersedes the outdated audio recording libraries.
 
 ### Screenshot of UI Design
-| <img src="MD/images/ss-1.png" height="400" alt="Screenshot"/>  | <img src="MD/images/ss-2.png" height="400" alt="Screenshot"/> |
+<img src="MD/images/ss-2.png" height="400" alt="Screenshot"/>
+<img src="MD/images/ss-1.png" height="400" alt="Screenshot"/>
