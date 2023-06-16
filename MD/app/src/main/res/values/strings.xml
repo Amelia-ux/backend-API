@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">capstone</string>
+    <string name="title_home">home</string>
+    <string name="title_dashboard">dashboard</string>
+    <string name="title_notifications">notifications</string>
+    <string-array name="data_kategori">
+        <item>Lapar</item>
+        <item>Mengantuk</item>
+        <item>Mengganti Popok</item>
+        <item>Takut</item>
+        <item>Sakit Perut</item>
+        <item>Sendawa</item>
+        <item>Suhu</item>
+        <item>Kesepian</item>
+    </string-array>
+
+    <string-array name="data_solusi">
+        <item><![CDATA[<br/>Berikan ASI atau susu formula<br/><br/>Jika bayi Anda menyusui, cobalah untuk memberikan ASI. Jika bayi Anda menggunakan susu formula, ikuti petunjuk penyusuan yang diberikan oleh produsen.Pastikan suhu susu sesuai dan tidak terlalu panas.<br/><br/>]]></item>
+        <item>Mengantuk</item>
+        <item>Mengganti Popok</item>
+        <item>Takut</item>
+        <item>Sakit Perut</item>
+        <item>Sendawa</item>
+        <item>Suhu</item>
+        <item>Kesepian</item>
+    </string-array>
+
+    <integer-array name="data_gambar">
+        <item>@drawable/baby_record</item>
+        <item>@drawable/baby_record</item>
+        <item>@drawable/baby_record</item>
+        <item>@drawable/baby_record</item>
+        <item>@drawable/baby_record</item>
+        <item>@drawable/baby_record</item>
+        <item>@drawable/baby_record</item>
+        <item>@drawable/baby_record</item>
+    </integer-array>
+</resources>

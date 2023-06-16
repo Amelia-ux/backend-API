@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/img_gif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center">
+    </ImageView>
+
+
+    <TextView
+        android:id="@+id/tv_recording"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="220dp"
+        android:text="Klik tombol mic untuk merekam"
+        android:textAlignment="center"
+        android:textColor="@color/red_but"
+        android:textSize="14pt"
+        android:visibility="visible" />
+
+
+    <ImageView
+        android:id="@+id/iv_kategori"
+        android:layout_width="207dp"
+        android:layout_height="205dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        app:srcCompat="@drawable/baby_record"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_hasilKategori"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="kategori"
+        android:textSize="16pt"
+        android:textColor="@color/red_but"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="220dp"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tv_solusi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red_but"
+        android:text="solusi"
+        android:textSize="12pt"
+        android:justificationMode="inter_word"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="300dp"
+        android:visibility="gone"/>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/bottomNavbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:fabCradleMargin="12dp"
+            app:fabCradleVerticalOffset="10dp"
+            app:fabCradleRoundedCornerRadius="20dp"
+            app:backgroundTint="@color/main_background">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
+                app:menu="@menu/bottom_nav_menu"
+                android:background="@color/main_background" />
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/record"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:tint="@color/white"
+            app:fabCustomSize="70dp"
+            android:src="@drawable/ic_baseline_mic_24"
+            app:maxImageSize="40dp"
+            app:layout_anchor="@id/bottomNavbar"
+            app:backgroundTint="@color/red_but" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
