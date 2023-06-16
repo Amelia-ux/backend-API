@@ -1,6 +1,7 @@
 <div align="center">
     <img src="ML/images/logo.png" height="400" alt="Screenshot"/>
 </div>
+
 # Halodek by Bangkit 2023 C23-PR534 Product Capstone
 A mobile app for baby cry recognition is a tool designed to help parents or caregivers understand and analyze the crying patterns of infants. This app aims to assist parents in better understanding and responding to their baby's needs, promoting effective communication and care.
 
@@ -16,7 +17,7 @@ https://github.com/royangkr/BabyReady/tree/master/BabyReady%20-%20Python/data
 ### Architecture of Model
 This architecture combines convolutional neural networks (CNNs) and dense layers for the baseline model with 8 classes (hungry, sleepy, discomfort, scared, belly pain, burp, temperature, or lonely).
 
-<img src="ML/images/model.png" height="400" alt="Screenshot"/>
+<img src="ML/images/model.png" height="500" alt="Screenshot"/>
 
 ### Workflow of Getting a Baby Crying Prediction
 1. The user records the sound of a baby crying using the app. 
